@@ -92,6 +92,11 @@ class SnapshotProcessor<IT extends IAnyType, CustomC, CustomS> extends BaseType<
         node.getReconciliationType = () => {
             return this
         }
+
+        const oldApplySnapshot = node.applySnapshot
+        node.applySnapshot = function(snaphot) {
+            return oldApplySnapshot.call(node, this.preProcessSnapshot(snaphot))
+        }
     }
 
     instantiate(
